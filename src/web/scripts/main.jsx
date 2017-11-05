@@ -5,8 +5,8 @@ export default class Main extends React.Component {
   constructor(...arg) {
     super(...arg);
     this.state = {
-      focus: 300,
-      distance: 300,
+      focus: 1600,
+      distance: 200,
       moon: { top: 0, left: 0, width: 1, height: 1 },
       man: { bottom: 0, left: 0, height: 1 },
       ground: 0
@@ -32,9 +32,9 @@ export default class Main extends React.Component {
     this.state.man.height = isNaN(manH) ? 1 : manH;
     this.state.man.bottom = isNaN(moonH)
       ? 1
-      : (150 + this.state.ground) / 480 * h;
+      : (164 + this.state.ground) / 480 * h;
     this.state.man.left = isNaN(moonH) ? 1 : (w - $("#man").width()) / 2;
-    $(".background-content").height((150 + this.state.ground) / 480 * h);
+    $(".background-content").height((164 + this.state.ground) / 480 * h);
   }
   render() {
     this.updateCalc();
@@ -69,38 +69,6 @@ export default class Main extends React.Component {
         </div>
         <div className="info-content">
           <div className="info-item">
-            <span>相机镜头焦距：</span>
-            <span id="focus">300</span>
-            <span>mm</span>
-            <Slider
-              tipFormatter={value => {
-                return `${value}mm`;
-              }}
-              marks={{
-                100: {
-                  style: {
-                    color: "#666"
-                  },
-                  label: <strong>100mm</strong>
-                },
-                1200: {
-                  style: {
-                    color: "#666"
-                  },
-                  label: <strong>1200mm</strong>
-                }
-              }}
-              min={100}
-              max={1200}
-              defaultValue={300}
-              step={20}
-              onChange={(v => {
-                $("#focus").html(v);
-                this.setState({ focus: v });
-              }).bind(this)}
-            />
-          </div>
-          <div className="info-item">
             <span>被摄人的距离：</span>
             <span id="distance">300</span>
             <span>m</span>
@@ -129,6 +97,38 @@ export default class Main extends React.Component {
               onChange={(v => {
                 $("#distance").html(v);
                 this.setState({ distance: v });
+              }).bind(this)}
+            />
+          </div>
+          <div className="info-item">
+            <span>相机镜头焦距：</span>
+            <span id="focus">1600</span>
+            <span>mm</span>
+            <Slider
+              tipFormatter={value => {
+                return `${value}mm`;
+              }}
+              marks={{
+                100: {
+                  style: {
+                    color: "#666"
+                  },
+                  label: <strong>100mm</strong>
+                },
+                1600: {
+                  style: {
+                    color: "#666"
+                  },
+                  label: <strong>1600mm</strong>
+                }
+              }}
+              min={100}
+              max={1600}
+              defaultValue={1600}
+              step={20}
+              onChange={(v => {
+                $("#focus").html(v);
+                this.setState({ focus: v });
               }).bind(this)}
             />
           </div>
