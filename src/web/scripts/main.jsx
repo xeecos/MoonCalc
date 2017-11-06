@@ -1,5 +1,5 @@
 import React from "react";
-import { Slider, Input } from "antd";
+import { Slider, Input, message } from "antd";
 import $ from "jquery";
 export default class Main extends React.Component {
   constructor(...arg) {
@@ -9,18 +9,23 @@ export default class Main extends React.Component {
       distance: 200,
       moon: { top: 0, left: 0, width: 1, height: 1 },
       man: { bottom: 0, left: 0, height: 1 },
-      ground: 0
+      size: [43.27, 28.3],
+      sizeId: 0,
+      ground: 0,
+      isLoaded: false
     };
   }
   componentDidMount() {
     this.updateCalc();
     this.forceUpdate();
+    this.state.isLoaded = true;
   }
+  componentDidUpdate() {}
   updateCalc() {
     const w = $("#canvas").width();
     const h = $("#canvas").width() / 1.5;
     $("#canvas").height(h);
-    const d = 43.27;
+    const d = this.state.size[this.state.sizeId];
     const c = 2 * Math.atan(d / 2 / this.state.focus) * 180 / Math.PI;
     const moonH = 0.5 / c * h;
     const manH =
@@ -40,7 +45,15 @@ export default class Main extends React.Component {
     this.updateCalc();
     return (
       <div className="container">
-        <div className="canvas-content" id="canvas">
+        <div
+          className="canvas-content"
+          id="canvas"
+          onClick={(() => {
+            this.setState({ sizeId: 1 - this.state.sizeId });
+            message.destroy();
+            message.success(this.state.sizeId == 1 ? "全幅" : "半幅", 1);
+          }).bind(this)}
+        >
           <div className="sky-content" />
           <div className="moon-content">
             <img
